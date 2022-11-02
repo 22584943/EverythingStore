@@ -1,0 +1,3 @@
+cannot add/remove products to array (set length), so created array list
+
+TODO: using length to pick productID is open to issues
