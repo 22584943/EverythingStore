@@ -4,5 +4,11 @@ how to sort arraylist of objects
 - https://www.techiedelight.com/sort-array-of-objects-java/
 - https://stackoverflow.com/questions/30951974/basic-bubble-sort-with-arraylist-in-java
 
-TODO: using length to pick productID is open to issues
-TODO: ensure unique SKU/ID
+TODO: using length to pick productID is open to issues CHECK
+TODO: ensure unique SKU/ID CHECK
+TODO: ensure stronger productExists CHECK
+TODO: UUID.randomUUID() way too slow - solved with StackOverflow https://stackoverflow.com/questions/14532976/performance-of-random-uuid-generation-with-java-7-or-java-6 CHECK
+
+
+TODO: input errors when entering wrong data type
+TODO: add customer class

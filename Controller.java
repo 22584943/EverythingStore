@@ -1,33 +1,53 @@
 import java.util.*;
+import java.util.stream.Collectors;
 public class Controller {
 	private static String inputSKU;
 	private static ArrayList<Product> products = new ArrayList<Product>(Arrays.asList());
 	private static String selection;
+	private static int inputStock;
 	private static String inputCategory;
 	private static String inputName;
 	private static String inputDescription;
 	private static int inputPrice;
-	private static int intInput;
 	private static ArrayList<String> categories = new ArrayList<String>(Arrays.asList());
 	// Create input scanner
 	static Scanner in = new Scanner(System.in);
 	
 	//Check if product exists
-	static public void checkIfProductExists(String SKU, ArrayList<Product> products) {
-		boolean SKUAlreadyExists = false;
+	static public boolean checkIfProductUnique(String name, String description, ArrayList<Product> products) {
+		boolean nameAlreadyExists = false;
+		boolean descriptionAlreadyExists = false;
 		 //Check if SKU already exists
 		 for (Product product : products) {
-			 if (product.getSKU().equals(SKU)) {
-				 SKUAlreadyExists = true;
+			 if (product.getName().equals(name)) {
+				 nameAlreadyExists = true;
+			 }
+			 if (product.getDescription().equals(description)) {
+				 descriptionAlreadyExists = true;
 			 }
 		 }
-		 if (SKUAlreadyExists) {
-			 System.out.println("SKU: " + inputSKU + " already exists. Please enter a unique SKU");
-			 System.out.println("\nEnter product SKU");
-			 inputSKU = in.nextLine();
+		 if (nameAlreadyExists || descriptionAlreadyExists) {
+			 String errorType = "";
+			 if (nameAlreadyExists) {
+				 errorType += "\nProduct name already exists. ";
+			 } 
+			 if (descriptionAlreadyExists) {
+				 errorType += "\nProduct description already exist. ";
+			 }
+			 System.out.println(errorType + "Please ensure you enter a unique name and description");
+			 System.out.println("\nEnter product name");
+			 inputName = in.next();
+			 
+			 System.out.println("\nEnter product description");
+			 inputDescription = in.next();
 			 // call method recursively
-			 checkIfProductExists(inputSKU, products);
-		 }
+			 checkIfProductUnique(inputName, inputDescription, products);
+		 } 
+		 
+		
+			 
+		 return true;
+		 
 		 
 	}
 	// get categories
@@ -44,14 +64,14 @@ public class Controller {
 	
 	public static void main(String[] args) {
 		
-		
+		Random r = new Random();
 		// POPULATE MOCK PRODUCTS
-		 products.add(new Product(products.size() + 1, "123", "fish", "tuna", "massive fish from atlantic", 50));
-		 products.add(new Product(products.size() + 1, "128", "fish", "salmon", "big fish from North Sea",20));
-		 products.add(new Product(products.size() + 1, "124", "cereal", "Coco Pops","tiny fish from atlantic", 5));
-		 products.add(new Product(products.size() + 1, "125", "fish", "mackerel", "small fish from atlantic",10));
-		 products.add(new Product(products.size() + 1, "126", "cereal", "Frosties", "tropical fish",100));
-		 products.add(new Product(products.size() + 1, "127", "fish", "cod", "white fish from atlantic",70));
+		 products.add(new Product(new UUID(r.nextLong(), r.nextLong()), 100, "fish", "tuna", "massive fish from atlantic", 50));
+		 products.add(new Product(new UUID(r.nextLong(), r.nextLong()), 100, "fish", "salmon", "big fish from North Sea",20));
+		 products.add(new Product(new UUID(r.nextLong(), r.nextLong()), 100, "cereal", "Coco Pops","tiny fish from atlantic", 5));
+		 products.add(new Product(new UUID(r.nextLong(), r.nextLong()), 100, "fish", "mackerel", "small fish from atlantic",10));
+		 products.add(new Product(new UUID(r.nextLong(), r.nextLong()), 100, "cereal", "Frosties", "tropical fish",100));
+		 products.add(new Product(new UUID(r.nextLong(), r.nextLong()), 100, "fish", "cod", "white fish from atlantic",70));
 		 
 		 ArrayList<Product> sortedProducts;
 		 
@@ -214,8 +234,6 @@ public class Controller {
 					
 					
 					
-					
-					
 					break;	
 				case "6":
 					break;
@@ -224,30 +242,44 @@ public class Controller {
 		 
 		 case "2":
 			 System.out.println("\nSearch for a product by SKU");
-			 String SKU = in.nextLine();
+			 String inputSKU = in.nextLine();
 			 // code to find and display product based on SKU
-			 System.out.println("SKU: " + SKU);
+			 // filter products to match input SKU
+			 List<Product> productMatch = products
+					  .stream()
+					  .filter(p -> p.getSKU().equals(inputSKU))
+					  .collect(Collectors.toList());
+			 System.out.println(productMatch.get(0));
 			 break;
 			 
 		 case "3":
 			 
-			 System.out.println("\nEnter product SKU");
-			 inputSKU = in.nextLine();
 			 
-			 checkIfProductExists(inputSKU, products);
+			 
+			 
+//			 System.out.println("\nEnter product SKU");
+//			 inputSKU = in.nextLine();
 			 System.out.println("\nEnter product category");
-			 inputCategory = in.nextLine();
+			 inputCategory = in.next();
+			 System.out.println("\nEnter initialStock");
+			 inputStock = in.nextInt();
 			 System.out.println("\nEnter product name");
-			 inputName = in.nextLine();
-			 System.out.println("\nEnter product description");
-			 inputDescription = in.nextLine();
-			 System.out.println("\nEnter product price");
-			 inputPrice = in.nextInt();
+			 inputName = in.next();
 			
-			 // Create new product, add to arrayList
-			 Product newProduct = new Product(products.size() + 1, inputSKU, inputCategory, inputName, inputDescription, inputPrice);
-			 products.add(newProduct);
+			 System.out.println("\nEnter product description");
+			 inputDescription = in.next();
+			//TODO make checkIfProductExists more robust - check item name and description
+			checkIfProductUnique(inputName, inputDescription, products);
+			System.out.println("\nEnter product price");
+			inputPrice = in.nextInt();
+				 
+				
+			// Create new product, add to arrayList
+			Product newProduct = new Product(new UUID(r.nextLong(), r.nextLong()), inputStock, inputCategory, inputName, inputDescription, inputPrice);
+			products.add(newProduct);
 			 break;
+			 
+			 
 			 
 		 case "4":
 			 System.out.println("Enter an SKU to delete product: ");
