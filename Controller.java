@@ -1,13 +1,14 @@
 import java.util.*;
 public class Controller {
-	static String inputSKU;
-	static ArrayList<Product> products = new ArrayList<Product>(Arrays.asList());
-	static String selection;
-	static String inputCategory;
-	static String inputDescription;
-	static int inputPrice;
-	static int intInput;
-	
+	private static String inputSKU;
+	private static ArrayList<Product> products = new ArrayList<Product>(Arrays.asList());
+	private static String selection;
+	private static String inputCategory;
+	private static String inputName;
+	private static String inputDescription;
+	private static int inputPrice;
+	private static int intInput;
+	private static ArrayList<String> categories = new ArrayList<String>(Arrays.asList());
 	// Create input scanner
 	static Scanner in = new Scanner(System.in);
 	
@@ -29,18 +30,28 @@ public class Controller {
 		 }
 		 
 	}
+	// get categories
+	static public ArrayList<String> getCategories() {
+		for (Product product : products) {
+			String category = product.getCategory();
+			if (!categories.contains(product.getCategory())) {
+				categories.add(category);
+			}
+		}
+		return categories;
+	}
 	
 	
 	public static void main(String[] args) {
 		
 		
 		// POPULATE MOCK PRODUCTS
-		 products.add(new Product(products.size() + 1, "123", "fish", "tuna", 50));
-		 products.add(new Product(products.size() + 1, "128", "fish", "salmon", 20));
-		 products.add(new Product(products.size() + 1, "124", "fish", "sardines", 5));
-		 products.add(new Product(products.size() + 1, "125", "fish", "mackerel", 10));
-		 products.add(new Product(products.size() + 1, "126", "fish", "swordfish", 100));
-		 products.add(new Product(products.size() + 1, "127", "fish", "cod", 70));
+		 products.add(new Product(products.size() + 1, "123", "fish", "tuna", "massive fish from atlantic", 50));
+		 products.add(new Product(products.size() + 1, "128", "fish", "salmon", "big fish from North Sea",20));
+		 products.add(new Product(products.size() + 1, "124", "cereal", "Coco Pops","tiny fish from atlantic", 5));
+		 products.add(new Product(products.size() + 1, "125", "fish", "mackerel", "small fish from atlantic",10));
+		 products.add(new Product(products.size() + 1, "126", "cereal", "Frosties", "tropical fish",100));
+		 products.add(new Product(products.size() + 1, "127", "fish", "cod", "white fish from atlantic",70));
 		 
 		 ArrayList<Product> sortedProducts;
 		 
@@ -80,7 +91,8 @@ public class Controller {
 			System.out.println("[2] Sort by price DESCENDING ");
 			System.out.println("[3] Sort by item name ASCENDING ");
 			System.out.println("[4] Sort by item name DESCENDING ");
-			System.out.println("[5] return ");
+			System.out.println("[5] View items by CATEGORY ");
+			System.out.println("[6] return ");
 			System.out.println("-------------");
 			selection = in.nextLine();
 				switch(selection) {
@@ -134,14 +146,14 @@ public class Controller {
 					}
 					break;
 				case "3":
-					System.out.println("sort item name ascending");
+					System.out.println("sort item alphabetically ascending");
 					
 					// loop through each product
 					for(int i=1; i < sortedProducts.size(); i++){  
 						// compare each product to all the others
 		                 for(int j=sortedProducts.size()-1; j >= i; j--){  
 		                
-		                          if(sortedProducts.get(j-1).getDescription().compareTo(sortedProducts.get(j).getDescription()) > 0){  
+		                          if(sortedProducts.get(j-1).getName().compareTo(sortedProducts.get(j).getName()) > 0){  
 		                                 //swap elements  
 		                                 Product temp = sortedProducts.get(j-1);  
 		                                 sortedProducts.set(j-1, sortedProducts.get(j));  
@@ -155,13 +167,13 @@ public class Controller {
 					}
 					break;
 				case "4":
-					System.out.println("sort by item descending ");
+					System.out.println("sort by item alphabetically descending ");
 					// loop through each product
 					for(int i=1; i < sortedProducts.size(); i++){  
 						// compare each product to all the others
 		                 for(int j=sortedProducts.size()-1; j >= i; j--){  
 		                
-		                          if(sortedProducts.get(j-1).getDescription().compareTo(sortedProducts.get(j).getDescription()) < 0){  
+		                          if(sortedProducts.get(j-1).getName().compareTo(sortedProducts.get(j).getName()) < 0){  
 		                                 //swap elements  
 		                                 Product temp = sortedProducts.get(j-1);  
 		                                 sortedProducts.set(j-1, sortedProducts.get(j));  
@@ -174,8 +186,38 @@ public class Controller {
 						System.out.println(sortedProducts.get(i));
 					}
 					break;
-						
+					
 				case "5":
+					System.out.println("SELECT CATEGORY");
+					// get categories
+					ArrayList<String> categories = getCategories();
+					ArrayList<Product> categoryItems = new ArrayList<Product>();
+					for (String category : categories) {
+						System.out.println("[" + categories.indexOf(category) + "] " + category);
+					}
+					// print categories
+					
+					int inputCategoryIndex = in.nextInt();
+					
+					// filter product matching selected category
+					for (Product product : products) {
+						if (product.getCategory().equals(categories.get(inputCategoryIndex))) {
+							categoryItems.add(product);
+						}	
+					}
+					
+					// print out selected category products
+					for (Product product : categoryItems) {
+						System.out.println(product);
+						
+					}
+					
+					
+					
+					
+					
+					break;	
+				case "6":
 					break;
 			 }
 		 break;
@@ -195,13 +237,15 @@ public class Controller {
 			 checkIfProductExists(inputSKU, products);
 			 System.out.println("\nEnter product category");
 			 inputCategory = in.nextLine();
+			 System.out.println("\nEnter product name");
+			 inputName = in.nextLine();
 			 System.out.println("\nEnter product description");
 			 inputDescription = in.nextLine();
 			 System.out.println("\nEnter product price");
 			 inputPrice = in.nextInt();
 			
 			 // Create new product, add to arrayList
-			 Product newProduct = new Product(products.size() + 1, inputSKU, inputCategory, inputDescription, inputPrice);
+			 Product newProduct = new Product(products.size() + 1, inputSKU, inputCategory, inputName, inputDescription, inputPrice);
 			 products.add(newProduct);
 			 break;
 			 
