@@ -12,3 +12,4 @@ TODO: UUID.randomUUID() way too slow - solved with StackOverflow https://stackov
 
 TODO: input errors when entering wrong data type
 TODO: add customer class
+create address objectS - for reusability, for ability to access/set individual fields

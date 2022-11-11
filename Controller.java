@@ -1,15 +1,15 @@
 import java.util.*;
 import java.util.stream.Collectors;
 public class Controller {
-	private static String inputSKU;
-	private static ArrayList<Product> products = new ArrayList<Product>(Arrays.asList());
 	private static String selection;
 	private static int inputStock;
 	private static String inputCategory;
 	private static String inputName;
 	private static String inputDescription;
 	private static int inputPrice;
+	private static ArrayList<Product> products = new ArrayList<Product>(Arrays.asList());
 	private static ArrayList<String> categories = new ArrayList<String>(Arrays.asList());
+	private static ArrayList<Customer> customers = new ArrayList<Customer>(Arrays.asList());
 	// Create input scanner
 	static Scanner in = new Scanner(System.in);
 	
@@ -36,10 +36,10 @@ public class Controller {
 			 }
 			 System.out.println(errorType + "Please ensure you enter a unique name and description");
 			 System.out.println("\nEnter product name");
-			 inputName = in.next();
+			 inputName = in.nextLine();
 			 
 			 System.out.println("\nEnter product description");
-			 inputDescription = in.next();
+			 inputDescription = in.nextLine();
 			 // call method recursively
 			 checkIfProductUnique(inputName, inputDescription, products);
 		 } 
@@ -84,6 +84,8 @@ public class Controller {
 		 System.out.println("[2] Search for a product by SKU");
 		 System.out.println("[3] Add a product");
 		 System.out.println("[4] Delete a product");
+		 System.out.println("[5] View Customers");
+		 System.out.println("[6] Add a Customer");
 		 // insert code to print remaining options
 		 System.out.println("[99] Exit");
 		 System.out.println();
@@ -260,14 +262,14 @@ public class Controller {
 //			 System.out.println("\nEnter product SKU");
 //			 inputSKU = in.nextLine();
 			 System.out.println("\nEnter product category");
-			 inputCategory = in.next();
+			 inputCategory = in.nextLine();
 			 System.out.println("\nEnter initialStock");
 			 inputStock = in.nextInt();
 			 System.out.println("\nEnter product name");
-			 inputName = in.next();
+			 inputName = in.nextLine();
 			
 			 System.out.println("\nEnter product description");
-			 inputDescription = in.next();
+			 inputDescription = in.nextLine();
 			//TODO make checkIfProductExists more robust - check item name and description
 			checkIfProductUnique(inputName, inputDescription, products);
 			System.out.println("\nEnter product price");
@@ -298,10 +300,48 @@ public class Controller {
 				 System.out.println("Product not found");
 			 }
 			 break;
+		 case "5":
+			 for (Customer customer : customers) {
+				 System.out.println(customer);
+			 }
+			 break;
 			 
+		 case "6":
+			 String customerName;
+			 String houseNumber;
+			 String firstLine;
+			 String secondLine;
+			 String countyState;
+			 String postcode;
+			 String country;
+			 String email;
+			 String telephone;
+			 System.out.println("\nEnter customer name");
+			 customerName = in.nextLine();
+			 System.out.println("\nEnter house number/name");
+			 houseNumber = in.nextLine();
+			 System.out.println("\nEnter street name");
+			 firstLine = in.nextLine();
+			 System.out.println("\nEnter town");
+			 secondLine = in.nextLine();
+			 System.out.println("\nEnter county/state");
+			 countyState = in.nextLine();
+			 System.out.println("\nEnter postcode");
+			 postcode = in.nextLine();
+			 System.out.println("\nEnter country");
+			 country = in.nextLine();
+			 System.out.println("\nEnter email");
+			 email = in.nextLine();
+			 System.out.println("\nEnter telephone");
+			 telephone = in.nextLine();
+			 Address address = new Address(houseNumber, firstLine, secondLine, countyState, postcode, country);
+			 Customer newCustomer = new Customer(customerName, address, email, telephone);
+			 customers.add(newCustomer);
+			 
+			 break; 
 		 } 
 		 
-
+		 
 		 } while (!selection.equals("99"));
 	}
 
