@@ -36,7 +36,7 @@ public class Address {
 	}
 	
 	public String toString() {
-		return houseNumber + " " + firstLine + ",\n" + town + ",\n" + countyState + ",\n" + postcode + ",\n" + country;
+		return "{" + houseNumber + " " + firstLine + ", " + town + ", " + countyState + ", " + postcode + ", " + country + "}";
 	}
 	
 	// Setters

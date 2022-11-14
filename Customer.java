@@ -16,8 +16,17 @@ public class Customer {
 		this.telephone = telephone;
 	}
 	
+	public Customer getCustomer() {
+		return this;
+	}
 	
+	public UUID getID() {
+		return this.id;
+	}
+	public String getCustomerName() {
+		return this.name;
+	}
 	public String toString() {
-		return id + "\n" + name + "\n" + address + "\n" + email + "\n" + telephone;
+		return "{" + id + ", " + name + ", " + address + ", " + email + ", " + telephone + "}";
 	}
 }
