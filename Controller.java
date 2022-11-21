@@ -156,11 +156,11 @@ public class Controller {
 	
 	static public void populateCustomers() {
 		 
-		customers.add(new Customer("Harry Styles", new Address("108", "Styles Mansion", "Hollywood", "California", "HL 4738", "USA"), "harry@mail.com", "064387477"));
-		customers.add(new Customer("Eric Cantona", new Address("288", "France Street", "London", "Greater London", "NH4 S83", "UK"), "eric@mail.com", "087776345"));
-		customers.add(new Customer("Fred East", new Address("12", "Church Street", "Stockport", "Cheshire", "SK8 6HF", "UK"), "fred@mail.com", "0543789345"));
-		customers.add(new Customer("Jammy Dodger", new Address("1", "Biscuit Lane", "Sweettown", "Blobshire", "BB33 4LG", "Chocolateland"), "jammy@mail.com", "095432345"));
-		 customers.add(new Customer("Master  Bourbon", new Address("23", "Chocolate Boulevard", "Chocton", "Chocshire", "CH3 2CC", "Chocolateland"), "bourbon@mail.com", "0774345"));
+		customers.add(new Customer("Harry Styles", new Address("108", "Styles Mansion", "Hollywood", "California", "HL 4738", "USA"), "harry@mail.com", "064387477", customers));
+		customers.add(new Customer("Eric Cantona", new Address("288", "France Street", "London", "Greater London", "NH4 S83", "UK"), "eric@mail.com", "087776345", customers));
+		customers.add(new Customer("Fred East", new Address("12", "Church Street", "Stockport", "Cheshire", "SK8 6HF", "UK"), "fred@mail.com", "0543789345", customers));
+		customers.add(new Customer("Jammy Dodger", new Address("1", "Biscuit Lane", "Sweettown", "Blobshire", "BB33 4LG", "Chocolateland"), "jammy@mail.com", "095432345", customers));
+		customers.add(new Customer("Master  Bourbon", new Address("23", "Chocolate Boulevard", "Chocton", "Chocshire", "CH3 2CC", "Chocolateland"), "bourbon@mail.com", "0774345", customers));
 	}
 	
 	static public void printPrimaryMenu() {
@@ -257,7 +257,7 @@ public class Controller {
 		 System.out.println("\nEnter telephone");
 		 telephone = in.nextLine();
 		 Address address = new Address(houseNumber, firstLine, secondLine, countyState, postcode, country);
-		 Customer newCustomer = new Customer(customerName, address, email, telephone);
+		 Customer newCustomer = new Customer(customerName, address, email, telephone, customers);
 		 customers.add(newCustomer);
 	}
 	
@@ -271,13 +271,13 @@ public class Controller {
 				  .filter(p -> p.getCustomerName().toLowerCase().contains(customerToDelete.toLowerCase()))
 				  .collect(Collectors.toList());
 		System.out.println("Is this the customer you wish to delete? Y/N");
-		UUID customerIDToDelete;
+		int customerIDToDelete;
 		if (customerMatch.size() > 0) {
 			System.out.println(customerMatch.get(0));
 			customerIDToDelete = customerMatch.get(0).getID();
 			String confirmDelete = in.nextLine();
 			if (confirmDelete.toLowerCase().equals("y")) {
-				customers.removeIf(customer -> customer.getID().equals(customerIDToDelete));
+				customers.removeIf(customer -> customer.getID() == customerIDToDelete);
 			} else {
 				System.out.println("NOT DELETED");
 			}

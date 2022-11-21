@@ -1,26 +1,46 @@
+import java.util.ArrayList;
 import java.util.Random;
-import java.util.UUID;
+
+
 
 public class Customer {
-	private UUID id;
+	private int id;
 	private String name;
 	private Address address;
 	private String email;
 	private String telephone;
-	Random r = new Random();
-	public Customer(String name, Address address, String email, String telephone) {
-		this.id = new UUID(r.nextLong(), r.nextLong());
+//	private static ArrayList<Customer> customers;
+	static Random r = new Random();
+	static int n = r.nextInt(5000);
+	
+	public static int getNewCustomerID(ArrayList<Customer>customers) {
+		
+		
+		// check for unique IDs
+		for (Customer c : customers) {
+			if (n == c.getID()) {
+				n = r.nextInt(5000);
+				getNewCustomerID(customers);
+			} 
+		}
+		return n;
+		
+	}
+	public Customer(String name, Address address, String email, String telephone, ArrayList<Customer> customers) {
+		
+		this.id = getNewCustomerID(customers);
 		this.name = name;
 		this.address = address;
 		this.email = email;
 		this.telephone = telephone;
+//		Customer.customers = customers;
 	}
 	
 	public Customer getCustomer() {
 		return this;
 	}
 	
-	public UUID getID() {
+	public int getID() {
 		return this.id;
 	}
 	public String getCustomerName() {
