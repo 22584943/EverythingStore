@@ -1,14 +1,18 @@
+import java.util.UUID;
+
 public class Product {
- private int id; 
- private String SKU; //stock keeping unit (a unique code for each product)
+ private UUID SKU; //stock keeping unit (a unique code for each product)
+ private int stock;
+ private String name;
  private String description;
  private String category;
  private int price;
 
 
-	public Product(int id, String SKU, String category, String description, int price) {
-		this.id = id;
+	public Product(UUID SKU, int initialStock, String category, String name, String description, int price) {
 		this.SKU = SKU;
+		this.stock = initialStock;
+		this.name = name;
 		this.category = category;
 		this.description = description;
 		this.price = price;
@@ -26,10 +30,13 @@ public class Product {
 	public String get() {
 		return this.toString();
 	}
-	public String getSKU() {
+	public UUID getSKU() {
 		return SKU;
 	}
 	
+	public String getName() {
+		return name;
+	}
 	public String getDescription() {
 		return description;
 	}
@@ -42,16 +49,18 @@ public class Product {
 		return price;
 	}
 	
-	public int getID() {
-		return id;
-	}
 	
+	public int getStock( ) {
+		return stock;
+	}
 	// Setters
 	
-	public void setSKU(String newSKU) {
+	public void setSKU(UUID newSKU) {
 		this.SKU = newSKU;
 	}
-	
+	public void setName(String name) {
+		this.name = name;
+	}
 	public void setDescription(String newDescription) {
 		this.description = newDescription;
 	}
@@ -63,10 +72,14 @@ public class Product {
 	public void setPrice(int newPrice) {
 		this.price = newPrice;
 	}
+	
+	public void incrementStock(int newStock ) {
+		this.stock += newStock;
+	}
 	// toString
 	
 	public String toString() {
-		return "ID: " + id + ", SKU: " + SKU + ", CATEGORY: " + category + ", DESCRIPTION: " + description + ", PRICE: " + price;
+		return "SKU: " + SKU + ", CATEGORY: " + category + " , NAME: " + name + ", DESCRIPTION: " + description + ", PRICE: " + price;
 	}
 	
 	
