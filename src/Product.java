@@ -1,7 +1,8 @@
 import java.util.UUID;
 
 public class Product {
- private UUID SKU; //stock keeping unit (a unique code for each product)
+	private int id;
+ private String SKU; //stock keeping unit (a unique code for each product)
  private int stock;
  private String name;
  private String description;
@@ -9,28 +10,29 @@ public class Product {
  private int price;
 
 
-	public Product(UUID SKU, int initialStock, String category, String name, String description, int price) {
+	public Product(int id, String SKU, String category, String name, String description, int price, int stock) {
+		this.id = id;
 		this.SKU = SKU;
-		this.stock = initialStock;
 		this.name = name;
 		this.category = category;
 		this.description = description;
 		this.price = price;
+		this.stock = stock;
 	}
-	
-//	public Product(int id, String SKU) {
-//		this.id = id;
-//		this.SKU = "some product";
-//		this.description = "best product ever";
-//		this.category = "category x";
-//		this.price = 1000;
-//	}
-	
+
+
+
 	// Getters
+
+
+	public int getID() {
+		return id;
+	}
+
 	public String get() {
 		return this.toString();
 	}
-	public UUID getSKU() {
+	public String getSKU() {
 		return SKU;
 	}
 	
@@ -55,7 +57,7 @@ public class Product {
 	}
 	// Setters
 	
-	public void setSKU(UUID newSKU) {
+	public void setSKU(String newSKU) {
 		this.SKU = newSKU;
 	}
 	public void setName(String name) {
