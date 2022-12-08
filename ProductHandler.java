@@ -18,24 +18,22 @@ public class ProductHandler implements HttpHandler{
         try {
             coll = products.getProducts();
             out.write(
-                    "<html>" +
-                            "<style>h1 {color: blue;}</style>" +
-                            "<head> <link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65\" crossorigin=\"anonymous\"><title>Customers </title> </head>" +
-                            "<body>" +
+                    getHeader.get() +
                             "<h1>Here be products...</h1>" +
-                            "<table class=\"table table-dark table-striped\">" +
-                            "<thead>" +
-                            "<tr>" +
-                            "<th class=\"col\">ID</th>" +
-                            "<th class=\"col\">SKU</th>" +
-                            "<th class=\"col\">Category</th>" +
-                            "<th class=\"col\">Name</th>" +
-                            "<th class=\"col\">Description</th>" +
-                            "<th class=\"col\">Price</th>" +
-                            "<th class=\"col\">Stock</th>" +
-                            "</tr>" +
-                            "</thead>" +
-                            "<tbody>"
+                            "<div class=\"table-cont\">" +
+                                "<table class=\"table table-dark table-striped\">" +
+                                "<thead>" +
+                                "<tr>" +
+                                "<th class=\"col\">ID</th>" +
+                                "<th class=\"col\">SKU</th>" +
+                                "<th class=\"col\">Category</th>" +
+                                "<th class=\"col\">Name</th>" +
+                                "<th class=\"col\">Description</th>" +
+                                "<th class=\"col\">Price</th>" +
+                                "<th class=\"col\">Stock</th>" +
+                                "</tr>" +
+                                "</thead>" +
+                                "<tbody>"
 
             );
             for (Product p: coll) {
@@ -57,6 +55,7 @@ public class ProductHandler implements HttpHandler{
 
                     "</tbody>" +
                             "</table>" +
+                            "</div>" +
                             "</body>" +
                             "</html>"
             );
